@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "ADFSourabh84"
+		},
+		"MicrosoftAccess_connectionString": {
+			"value": ""
+		},
+		"MicrosoftAccess_credential": {
+			"value": ""
+		},
+		"Parameter_LindedService_connectionString": {
+			"value": ""
+		},
+		"linked_input_connectionString": {
+			"value": ""
+		},
+		"Event1_properties_typeProperties_scope": {
+			"value": "/subscriptions/11a8e20c-0858-46b4-8788-0342fdc0d426/resourceGroups/Resource_Sourabh/providers/Microsoft.Storage/storageAccounts/storagesourabh"
+		}
+	}
+}

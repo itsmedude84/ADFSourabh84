@@ -1,0 +1,32 @@
+{
+	"name": "surrogate",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Excel1",
+						"type": "DatasetReference"
+					},
+					"name": "source"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DataFlow_output",
+						"type": "DatasetReference"
+					},
+					"name": "sink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "SurrogateKey1"
+				}
+			],
+			"script": "source(output(\n\t\tID as string,\n\t\tEmpName as string,\n\t\tEmpCNTRY as string,\n\t\tDeptid as string,\n\t\tGender as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source\nsource keyGenerate(output(Datakey as long),\n\tstartAt: 1L) ~> SurrogateKey1\nSurrogateKey1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['surrogate.xlsx'],\n\tmapColumn(\n\t\tDatakey,\n\t\tID,\n\t\tEmpName,\n\t\tEmpCNTRY,\n\t\tDeptid,\n\t\tGender\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink"
+		}
+	}
+}

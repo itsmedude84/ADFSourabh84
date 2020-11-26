@@ -1,0 +1,32 @@
+{
+	"name": "aggregation",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Excel1",
+						"type": "DatasetReference"
+					},
+					"name": "inputSource"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DataFlow_output",
+						"type": "DatasetReference"
+					},
+					"name": "output"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Aggregate"
+				}
+			],
+			"script": "source(output(\n\t\tID as string,\n\t\tEmpName as string,\n\t\tEmpCNTRY as string,\n\t\tDeptid as string,\n\t\tGender as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: true) ~> inputSource\ninputSource aggregate(groupBy(EmpName),\n\tTotal_Employee = count(ID)) ~> Aggregate\nAggregate sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['Aggregate.xlsx'],\n\tmapColumn(\n\t\tEmpName,\n\t\tTotal_Employee\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> output"
+		}
+	}
+}

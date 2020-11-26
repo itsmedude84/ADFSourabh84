@@ -1,0 +1,16 @@
+{
+	"name": "MicrosoftAccess_input",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "MicrosoftAccess",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "MicrosoftAccessTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": "`D_PROD`"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,32 @@
+{
+	"name": "pivot",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Excel1",
+						"type": "DatasetReference"
+					},
+					"name": "source"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DataFlow_output",
+						"type": "DatasetReference"
+					},
+					"name": "sink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Pivot"
+				}
+			],
+			"script": "source(output(\n\t\tID as string,\n\t\tEmpName as string,\n\t\tEmpCNTRY as string,\n\t\tDeptid as string,\n\t\tGender as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source\nsource pivot(groupBy(Deptid),\n\tpivotBy(Gender),\n\tCount = count(ID),\n\tcolumnNaming: '$N$V',\n\tlateral: true) ~> Pivot\nPivot sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['pivot.xlsx'],\n\tmapColumn(\n\t\tDeptid\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink"
+		}
+	}
+}

@@ -1,0 +1,34 @@
+{
+	"name": "DataFlow_pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "EmpData",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "surrogate",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2020-11-22T11:16:18Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,94 @@
+{
+	"name": "for each example",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.output_folder",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "sourabhupload/input/file.txt"
+								},
+								{
+									"name": "Destination",
+									"value": "sourabhupload/@{'<output_folder>'}/"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "BinarySource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true
+									},
+									"formatSettings": {
+										"type": "BinaryReadSettings"
+									}
+								},
+								"sink": {
+									"type": "BinarySink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "input",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "foreach_dataset",
+									"type": "DatasetReference",
+									"parameters": {
+										"foldername": {
+											"value": "@item()",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"output_folder": {
+				"type": "array",
+				"defaultValue": [
+					"output1",
+					"output2",
+					"output3"
+				]
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2020-11-13T13:37:39Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

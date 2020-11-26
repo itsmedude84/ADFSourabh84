@@ -1,0 +1,16 @@
+{
+	"name": "MicrosoftAccess_output",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "MicrosoftAccess",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "MicrosoftAccessTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": "`Folder`"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,39 @@
+{
+	"name": "conditional",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Excel1",
+						"type": "DatasetReference"
+					},
+					"name": "source"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DataFlow_output",
+						"type": "DatasetReference"
+					},
+					"name": "Sales"
+				},
+				{
+					"dataset": {
+						"referenceName": "DataFlow_output",
+						"type": "DatasetReference"
+					},
+					"name": "Software"
+				}
+			],
+			"transformations": [
+				{
+					"name": "ConditionalSplit"
+				}
+			],
+			"script": "source(output(\n\t\tID as string,\n\t\tEmpName as string,\n\t\tEmpCNTRY as string,\n\t\tDeptid as string,\n\t\tGender as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: true) ~> source\nsource split(equals(Deptid,'2'),\n\tequals(Deptid,'3'),\n\tdisjoint: false) ~> ConditionalSplit@(Sales, Software)\nConditionalSplit@Sales sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['Sales.xlsx'],\n\tmapColumn(\n\t\tID,\n\t\tEmpName,\n\t\tEmpCNTRY,\n\t\tDeptid\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Sales\nConditionalSplit@Software sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['software.xlsx'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Software"
+		}
+	}
+}

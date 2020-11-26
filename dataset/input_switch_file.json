@@ -1,0 +1,20 @@
+{
+	"name": "input_switch_file",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linked_input",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "hello.txt",
+				"folderPath": "input",
+				"container": "sourabhupload"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

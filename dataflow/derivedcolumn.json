@@ -1,0 +1,32 @@
+{
+	"name": "derivedcolumn",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Excel1",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DataFlow_output",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DerivedColumn"
+				}
+			],
+			"script": "source(output(\n\t\tID as string,\n\t\tEmpName as string,\n\t\tEmpCNTRY as string,\n\t\tDeptid as string,\n\t\tGender as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 derive(EmpCNTRY = upper((EmpCNTRY)),\n\t\tNewCNTRY = iif(equals(EmpCNTRY,'India'), 'Yes','No')) ~> DerivedColumn\nDerivedColumn sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['Derived.xlsx'],\n\tmapColumn(\n\t\tID,\n\t\tEmpName,\n\t\tEmpCNTRY,\n\t\tDeptid,\n\t\tNewCNTRY\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+		}
+	}
+}

@@ -1,0 +1,29 @@
+{
+	"name": "WranglingDataFlow",
+	"properties": {
+		"type": "WranglingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "csvinput",
+					"script": "",
+					"dataset": {
+						"referenceName": "csvinput",
+						"type": "DatasetReference"
+					}
+				}
+			],
+			"sinks": [
+				{
+					"name": "Sink1",
+					"dataset": {
+						"referenceName": "DataFlow_output",
+						"type": "DatasetReference"
+					},
+					"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Sink1"
+				}
+			],
+			"script": "section Section1;\r\nshared csvinput = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://storagesourabh.blob.core.windows.net/sourabhupload/input/Empcsv.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared UserQuery = let\r\n  Source = csvinput,\r\n  #\"Changed column type\" = Table.TransformColumnTypes(Source, {{\"ID\", Int64.Type}}),\r\n  #\"Removed columns\" = Table.RemoveColumns(#\"Changed column type\", {\"Gender\"})\r\nin\r\n  #\"Removed columns\";\r\n"
+		}
+	}
+}

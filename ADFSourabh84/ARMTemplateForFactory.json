@@ -120,7 +120,9 @@
 						}
 					}
 				],
-				"annotations": [],
+				"annotations": [
+					"delete"
+				],
 				"lastPublishTime": "2020-11-11T15:26:54Z"
 			},
 			"dependsOn": [
@@ -973,7 +975,9 @@
 						]
 					}
 				],
-				"annotations": [],
+				"annotations": [
+					"transfer"
+				],
 				"lastPublishTime": "2020-11-11T14:59:15Z"
 			},
 			"dependsOn": [

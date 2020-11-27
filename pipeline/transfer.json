@@ -56,7 +56,9 @@
 				]
 			}
 		],
-		"annotations": [],
+		"annotations": [
+			"transfer"
+		],
 		"lastPublishTime": "2020-11-11T14:59:15Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"

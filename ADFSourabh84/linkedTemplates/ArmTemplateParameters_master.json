@@ -20,6 +20,9 @@
 		"linked_input_connectionString": {
 			"value": ""
 		},
+		"CosmosDb__linked_connectionString": {
+			"value": ""
+		},
 		"Event1_properties_typeProperties_scope": {
 			"value": "/subscriptions/11a8e20c-0858-46b4-8788-0342fdc0d426/resourceGroups/Resource_Sourabh/providers/Microsoft.Storage/storageAccounts/storagesourabh"
 		},

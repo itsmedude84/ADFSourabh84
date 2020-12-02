@@ -27,6 +27,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'linked_input'"
 		},
+		"CosmosDb__linked_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'CosmosDb__linked'"
+		},
 		"Event1_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/11a8e20c-0858-46b4-8788-0342fdc0d426/resourceGroups/Resource_Sourabh/providers/Microsoft.Storage/storageAccounts/storagesourabh"
@@ -66,6 +70,9 @@
 					},
 					"linked_input_connectionString": {
 						"value": "[parameters('linked_input_connectionString')]"
+					},
+					"CosmosDb__linked_connectionString": {
+						"value": "[parameters('CosmosDb__linked_connectionString')]"
 					},
 					"MicrosoftAccess_connectionString": {
 						"value": "[parameters('MicrosoftAccess_connectionString')]"

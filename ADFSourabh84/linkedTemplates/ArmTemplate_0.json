@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "ADFSourabh84"
 		},
+		"AzureSqlDatabase_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase'"
+		},
 		"Parameter_LindedService_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'Parameter_LindedService'"
@@ -45,6 +49,19 @@
 					}
 				],
 				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlDatabase_connectionString')]"
+				}
 			},
 			"dependsOn": []
 		},
@@ -306,7 +323,6 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "file.txt",
 						"folderPath": "input",
 						"container": "sourabhupload"
 					}
@@ -354,7 +370,6 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "file.txt",
 						"folderPath": "output",
 						"container": "sourabhupload"
 					}
@@ -935,78 +950,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/input_switch_file')]",
 				"[concat(variables('factoryId'), '/datasets/output_switch_file')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/transfer')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy data",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "sourabhupload/input/file.txt"
-							},
-							{
-								"name": "Destination",
-								"value": "sourabhupload/output/file.txt"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "BinarySource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true
-								},
-								"formatSettings": {
-									"type": "BinaryReadSettings"
-								}
-							},
-							"sink": {
-								"type": "BinarySink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "input",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "output",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": [
-					"transfer"
-				],
-				"lastPublishTime": "2020-11-11T14:59:15Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/input')]",
-				"[concat(variables('factoryId'), '/datasets/output')]"
 			]
 		}
 	]

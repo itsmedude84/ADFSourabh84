@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "ADFSourabh84"
 		},
+		"AzureSqlDatabase_connectionString": {
+			"value": ""
+		},
 		"MicrosoftAccess_connectionString": {
 			"value": ""
 		},

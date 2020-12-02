@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "ADFSourabh84"
 		},
+		"AzureSqlDatabase_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase'"
+		},
 		"MicrosoftAccess_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'MicrosoftAccess'"
@@ -54,6 +58,9 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"AzureSqlDatabase_connectionString": {
+						"value": "[parameters('AzureSqlDatabase_connectionString')]"
+					},
 					"Parameter_LindedService_connectionString": {
 						"value": "[parameters('Parameter_LindedService_connectionString')]"
 					},
@@ -83,6 +90,26 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'ADFSourabh84_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "ADFSourabh84_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
 					},
 					"Event1_properties_typeProperties_scope": {
 						"value": "[parameters('Event1_properties_typeProperties_scope')]"
@@ -90,7 +117,7 @@
 				}
 			},
 			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'ADFSourabh84_ArmTemplate_0')]"
+				"[resourceId('Microsoft.Resources/deployments', 'ADFSourabh84_ArmTemplate_1')]"
 			]
 		}
 	]

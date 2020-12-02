@@ -3,8 +3,31 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
-				"type": "Copy",
+				"name": "Filter",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Metadata').output.childItems",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@endswith(activity('Get Metadata').output.ChildItems.name,'txt')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Get Metadata",
+				"type": "GetMetadata",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
@@ -15,37 +38,20 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "BinarySource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"deleteFilesAfterCompletion": false
-						},
-						"formatSettings": {
-							"type": "BinaryReadSettings"
-						}
-					},
-					"sink": {
-						"type": "BinarySink",
-						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
-						}
-					},
-					"enableStaging": false
-				},
-				"inputs": [
-					{
+					"dataset": {
 						"referenceName": "input",
 						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings"
+					},
+					"formatSettings": {
+						"type": "BinaryReadSettings"
 					}
-				],
-				"outputs": [
-					{
-						"referenceName": "output",
-						"type": "DatasetReference"
-					}
-				]
+				}
 			}
 		],
 		"annotations": []

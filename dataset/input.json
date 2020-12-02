@@ -10,7 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "file.txt",
 				"folderPath": "input",
 				"container": "sourabhupload"
 			}

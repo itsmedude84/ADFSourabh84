@@ -3,24 +3,37 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Execute Pipeline",
-				"type": "ExecutePipeline",
+				"name": "Copy data1",
+				"type": "Copy",
 				"dependsOn": [],
-				"userProperties": [
-					{
-						"name": "Pipeline invoked",
-						"value": "done pls check"
-					}
-				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
 				"typeProperties": {
-					"pipeline": {
-						"referenceName": "transfer",
-						"type": "PipelineReference"
+					"source": {
+						"type": "CosmosDbSqlApiSource",
+						"preferredRegions": []
 					},
-					"waitOnCompletion": true
-				}
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "CosmosDb",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
+		"parameters": {
+			"starttime": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"lastPublishTime": "2020-11-13T07:17:36Z"
 	},
